@@ -1,0 +1,11 @@
+name: tiny_sound_font
+version: 0.1.0
+
+authors:
+  - kojix2 <2xijok@gmail.com>
+
+crystal: '>= 1.18.0'
+
+postinstall: make -C ext
+
+license: MIT

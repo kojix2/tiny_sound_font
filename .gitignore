@@ -1,0 +1,22 @@
+/docs/
+/lib/
+/bin/
+/.shards/
+*.dwarf
+
+/shard.lock
+
+# Binary and object files
+*.a
+*.dSYM
+*.dll
+*.lib
+*.dwarf
+*.exe
+*.pdb
+*.obj
+*.o
+*.so
+*.dylib
+
+*.wav

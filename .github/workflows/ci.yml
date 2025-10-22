@@ -1,0 +1,72 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu", "macos", "windows"]
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
+      - uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: latest
+      - name: Setup MSVC Developer Command Prompt
+        if: ${{ matrix.os == 'windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: Build native extension (MSVC)
+        if: ${{ matrix.os == 'windows' }}
+        run: make -C ext CC=cl
+        env:
+          MSYS_NO_PATHCONV: "1"
+          MSYS2_ARG_CONV_EXCL: "*"
+      - name: Build native extension (POSIX)
+        if: ${{ matrix.os != 'windows' }}
+        run: make -C ext
+      - name: Run specs
+        run: crystal spec --error-trace
+      - name: Build examples
+        run: |
+          crystal build examples/example1.cr
+          crystal build examples/example2.cr
+          crystal build examples/example3.cr
+  build_MinGW64:
+    name: MinGW64
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-crystal
+            mingw-w64-x86_64-shards
+            git
+            make
+      - name: Install dependencies
+        shell: msys2 {0}
+        run: shards install
+      - name: Run tests
+        shell: msys2 {0}
+        run: |
+          make -C ext
+          crystal spec
+      - name: Build examples
+        shell: msys2 {0}
+        run: |
+          crystal build examples/example1.cr
+          crystal build examples/example2.cr
+          crystal build examples/example3.cr

@@ -1,6 +1,7 @@
 require "../src/tiny_sound_font"
 
-LibTSF = TinySoundFont::LibTSF
+LibTSF       = TinySoundFont::LibTSF
+LittleEndian = IO::ByteFormat::LittleEndian
 
 # Example2: iterate through all presets, play a 1-second note per preset,
 # render in float32, convert to Int16, and write a single WAV file.
@@ -21,22 +22,22 @@ def write_wav(path : String, pcm_bytes : Bytes, sample_rate : Int32, channels : 
   File.open(path, "wb") do |io|
     # RIFF
     io.write "RIFF".to_slice
-    io.write_bytes(riff_size.to_u32, IO::ByteFormat::LittleEndian)
+    io.write_bytes(riff_size.to_u32, LittleEndian)
     io.write "WAVE".to_slice
 
     # fmt
     io.write "fmt ".to_slice
-    io.write_bytes(16_u32, IO::ByteFormat::LittleEndian) # chunk size
-    io.write_bytes(1_u16, IO::ByteFormat::LittleEndian)  # PCM
-    io.write_bytes(channels.to_u16, IO::ByteFormat::LittleEndian)
-    io.write_bytes(sample_rate.to_u32, IO::ByteFormat::LittleEndian)
-    io.write_bytes(byte_rate.to_u32, IO::ByteFormat::LittleEndian)
-    io.write_bytes(block_align.to_u16, IO::ByteFormat::LittleEndian)
-    io.write_bytes((BYTES_PER_SAMPLE * 8).to_u16, IO::ByteFormat::LittleEndian)
+    io.write_bytes(16_u32, LittleEndian) # chunk size
+    io.write_bytes(1_u16, LittleEndian)  # PCM
+    io.write_bytes(channels.to_u16, LittleEndian)
+    io.write_bytes(sample_rate.to_u32, LittleEndian)
+    io.write_bytes(byte_rate.to_u32, LittleEndian)
+    io.write_bytes(block_align.to_u16, LittleEndian)
+    io.write_bytes((BYTES_PER_SAMPLE * 8).to_u16, LittleEndian)
 
     # data
     io.write "data".to_slice
-    io.write_bytes(data_size.to_u32, IO::ByteFormat::LittleEndian)
+    io.write_bytes(data_size.to_u32, LittleEndian)
     io.write(pcm_bytes)
   end
 end

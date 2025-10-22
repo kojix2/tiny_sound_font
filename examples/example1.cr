@@ -1,6 +1,7 @@
 require "../src/tiny_sound_font"
 
-LibTSF = TinySoundFont::LibTSF
+LibTSF       = TinySoundFont::LibTSF
+LittleEndian = IO::ByteFormat::LittleEndian
 
 # Short demo: load a SoundFont, start two notes, render 3 seconds into a WAV file.
 
@@ -21,22 +22,22 @@ def write_wav(path : String, pcm_bytes : Bytes, sample_rate : Int32, channels : 
   File.open(path, "wb") do |io|
     # RIFF header
     io.write "RIFF".to_slice
-    io.write_bytes(riff_size.to_u32, IO::ByteFormat::LittleEndian)
+    io.write_bytes(riff_size.to_u32, LittleEndian)
     io.write "WAVE".to_slice
 
     # fmt chunk
     io.write "fmt ".to_slice
-    io.write_bytes(16_u32, IO::ByteFormat::LittleEndian) # PCM chunk size
-    io.write_bytes(1_u16, IO::ByteFormat::LittleEndian)  # PCM format
-    io.write_bytes(channels.to_u16, IO::ByteFormat::LittleEndian)
-    io.write_bytes(sample_rate.to_u32, IO::ByteFormat::LittleEndian)
-    io.write_bytes(byte_rate.to_u32, IO::ByteFormat::LittleEndian)
-    io.write_bytes(block_align.to_u16, IO::ByteFormat::LittleEndian)
-    io.write_bytes((bytes_per_sample * 8).to_u16, IO::ByteFormat::LittleEndian)
+    io.write_bytes(16_u32, LittleEndian) # PCM chunk size
+    io.write_bytes(1_u16, LittleEndian)  # PCM format
+    io.write_bytes(channels.to_u16, LittleEndian)
+    io.write_bytes(sample_rate.to_u32, LittleEndian)
+    io.write_bytes(byte_rate.to_u32, LittleEndian)
+    io.write_bytes(block_align.to_u16, LittleEndian)
+    io.write_bytes((bytes_per_sample * 8).to_u16, LittleEndian)
 
     # data chunk
     io.write "data".to_slice
-    io.write_bytes(data_size.to_u32, IO::ByteFormat::LittleEndian)
+    io.write_bytes(data_size.to_u32, LittleEndian)
     io.write(pcm_bytes)
   end
 end

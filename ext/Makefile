@@ -47,6 +47,7 @@ all: $(STATIC)
 ifeq ($(IS_MSVC),cl)
 $(STATIC): $(OBJ)
 	$(AR) /nologo /out:$@ $^
+	$(AR) /nologo /out:tsf.lib $^
 else
 $(STATIC): $(OBJ)
 	$(AR) rcs $@ $^

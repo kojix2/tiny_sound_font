@@ -7,7 +7,7 @@
    ```yaml
    dependencies:
      tiny_sound_font:
-       github: your-github-user/tiny_sound_font
+       github: kojix2/tiny_sound_font
    ```
 
 2. Run `shards install`

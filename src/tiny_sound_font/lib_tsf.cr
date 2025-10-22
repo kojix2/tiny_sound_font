@@ -1,5 +1,9 @@
 module TinySoundFont
-  @[Link(ldflags: "-L#{__DIR__}/../../ext -ltsf -lm")]
+  {% if flag?(:msvc) %}
+    @[Link("tsf", ldflags: "/LIBPATH:#{__DIR__}\\..\\..\\ext")]
+  {% else %}
+    @[Link(ldflags: "-L#{__DIR__}/../../ext -ltsf -lm")]
+  {% end %}
   lib LibTSF
     # Opaque C handle to `struct tsf`
     alias TSF = Void*

@@ -25,6 +25,12 @@ require "tiny_sound_font"
 
 ## Development
 
+```sh
+git clone --recursive https://github.com/kojix2/tiny_sound_font
+make -C ext
+crystal spec
+```
+
 ## Contributing
 
 1. Fork it (<https://github.com/your-github-user/tiny_sound_font/fork>)

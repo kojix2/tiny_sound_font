@@ -100,15 +100,16 @@ options = CliOptions.new
 # Parse CLI
 options = CliOptions.new
 parser = OptionParser.new do |p|
+  p.summary_width = 20
   p.banner = "Usage: midi2wav [options] -m <midi_file> [-s <soundfont.sf2>]"
-  p.on("-m PATH", "--midi=PATH", "MIDI file path") { |v| options.midi_path = v }
-  p.on("-s PATH", "--sf2=PATH", "SoundFont (.sf2) path (default: embedded florestan-subset.sf2)") { |v| options.soundfont_path = v }
-  p.on("-o PATH", "--out=PATH", "Output WAV path (default: <midi>.wav)") { |v| options.output_path = v }
-  p.on("--sr=N", "Sample rate (default: #{DEFAULT_SAMPLE_RATE})") { |v| options.sample_rate = v.to_i }
-  p.on("--gain=DB", "Global gain in dB (default: #{DEFAULT_GAIN_DB})") { |v| options.gain_db = v.to_f32 }
-  p.on("--block=N", "Block size in frames (default: #{DEFAULT_BLOCK_SIZE})") { |v| options.block_size = v.to_i }
+  p.on("-m", "--midi PATH", "MIDI file path") { |v| options.midi_path = v }
+  p.on("-s", "--sf2 PATH", "SoundFont (.sf2) path (default: florestan-subset.sf2)") { |v| options.soundfont_path = v }
+  p.on("-o", "--out PATH", "Output WAV path (default: <midi>.wav)") { |v| options.output_path = v }
+  p.on("--sr N", "Sample rate (default: #{DEFAULT_SAMPLE_RATE})") { |v| options.sample_rate = v.to_i }
+  p.on("--gain DB", "Global gain in dB (default: #{DEFAULT_GAIN_DB})") { |v| options.gain_db = v.to_f32 }
+  p.on("--block N", "Block size in frames (default: #{DEFAULT_BLOCK_SIZE})") { |v| options.block_size = v.to_i }
   p.on("--mono", "Render mono output") { options.output_mode = TinySoundFont::OutputMode::Mono }
-  p.on("--drums-channel=N", "Drums channel index (default: 9, -1 to disable)") { |v| options.drums_channel = v.to_i }
+  p.on("--drums-channel N", "Drums channel index (default: 9, -1 to disable)") { |v| options.drums_channel = v.to_i }
   p.on("-h", "--help", "Show help") { puts p; exit 0 }
 end
 parser.parse

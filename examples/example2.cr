@@ -1,4 +1,5 @@
 require "../src/tiny_sound_font"
+require "./wav"
 
 LittleEndian = IO::ByteFormat::LittleEndian
 
@@ -10,32 +11,6 @@ SECONDS_PER_PRESET =      1
 BYTES_PER_SAMPLE   =      2
 
 NOTES = [48, 50, 52, 53, 55, 57, 59]
-
-def write_wav(path : String, pcm_bytes : Bytes, sample_rate : Int32, channels : Int32)
-  byte_rate = sample_rate * channels * BYTES_PER_SAMPLE
-  block_align = channels * BYTES_PER_SAMPLE
-  data_size = pcm_bytes.size
-  riff_size = 4 + (8 + 16) + (8 + data_size)
-
-  File.open(path, "wb") do |io|
-    io.write "RIFF".to_slice
-    io.write_bytes(riff_size.to_u32, LittleEndian)
-    io.write "WAVE".to_slice
-
-    io.write "fmt ".to_slice
-    io.write_bytes(16_u32, LittleEndian)
-    io.write_bytes(1_u16, LittleEndian)
-    io.write_bytes(channels.to_u16, LittleEndian)
-    io.write_bytes(sample_rate.to_u32, LittleEndian)
-    io.write_bytes(byte_rate.to_u32, LittleEndian)
-    io.write_bytes(block_align.to_u16, LittleEndian)
-    io.write_bytes((BYTES_PER_SAMPLE * 8).to_u16, LittleEndian)
-
-    io.write "data".to_slice
-    io.write_bytes(data_size.to_u32, LittleEndian)
-    io.write(pcm_bytes)
-  end
-end
 
 def float_to_int16!(buf_f32 : Slice(Float32), out_i16 : Slice(Int16))
   buf_f32.size.times do |i|
@@ -81,6 +56,6 @@ TinySoundFont::SoundFont.open(sf2_path, SAMPLE_RATE, TinySoundFont::OutputMode::
   end
 
   out_path = File.expand_path("example2.wav", __DIR__)
-  write_wav(out_path, pcm_bytes, SAMPLE_RATE, CHANNELS)
+  WAV.write_i16(out_path, SAMPLE_RATE, CHANNELS, pcm_i16)
   puts "Wrote #{out_path} (#{seconds}s, #{SAMPLE_RATE} Hz, stereo)"
 end

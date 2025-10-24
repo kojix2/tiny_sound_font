@@ -1,4 +1,5 @@
 require "../src/tiny_sound_font"
+require "./wav"
 
 # Example3 using high-level API + TinyMidiLoader: offline render MIDI to WAV.
 
@@ -80,43 +81,6 @@ def param_high(msg) : UInt8
   ((msg.param >> 8) & 0xFF).to_u8
 end
 
-def write_wav(path : String, float_data : Slice(Float32))
-  pcm_bytes = float_to_int16(float_data)
-  byte_rate = SAMPLE_RATE * CHANNELS * BYTES_PER_SAMPLE
-  block_align = CHANNELS * BYTES_PER_SAMPLE
-  riff_size = 4 + (8 + 16) + (8 + pcm_bytes.size)
-
-  File.open(path, "wb") do |io|
-    io.write "RIFF".to_slice
-    io.write_bytes(riff_size.to_u32, IO::ByteFormat::LittleEndian)
-    io.write "WAVE".to_slice
-
-    io.write "fmt ".to_slice
-    io.write_bytes(16_u32, IO::ByteFormat::LittleEndian)
-    io.write_bytes(1_u16, IO::ByteFormat::LittleEndian)
-    io.write_bytes(CHANNELS.to_u16, IO::ByteFormat::LittleEndian)
-    io.write_bytes(SAMPLE_RATE.to_u32, IO::ByteFormat::LittleEndian)
-    io.write_bytes(byte_rate.to_u32, IO::ByteFormat::LittleEndian)
-    io.write_bytes(block_align.to_u16, IO::ByteFormat::LittleEndian)
-    io.write_bytes((BYTES_PER_SAMPLE * 8).to_u16, IO::ByteFormat::LittleEndian)
-
-    io.write "data".to_slice
-    io.write_bytes(pcm_bytes.size.to_u32, IO::ByteFormat::LittleEndian)
-    io.write(pcm_bytes)
-  end
-end
-
-def float_to_int16(float_data : Slice(Float32)) : Bytes
-  bytes = Bytes.new(float_data.size * 2)
-  int16_data = Slice.new(bytes.to_unsafe.as(Int16*), float_data.size)
-
-  float_data.each_with_index do |sample, i|
-    int16_data[i] = (sample.clamp(-1.0_f32, 1.0_f32) * 32_767.0_f32).round.to_i16
-  end
-
-  bytes
-end
-
 # Main execution
 midi_path = ARGV[0]? || File.expand_path("../ext/TinySoundFont/examples/venture.mid", __DIR__)
 sf2_path = ARGV[1]? || File.expand_path("../ext/TinySoundFont/examples/florestan-subset.sf2", __DIR__)
@@ -134,7 +98,7 @@ total_frames = (total_ms.to_f64 * SAMPLE_RATE / 1000.0).ceil.to_i
 TinySoundFont::SoundFont.open(sf2_path, SAMPLE_RATE, TinySoundFont::OutputMode::StereoInterleaved, GAIN_DB) do |sf|
   configure_synth(sf)
   audio_data = render_midi(sf, first_msg, total_frames)
-  write_wav(output_path, audio_data)
+  WAV.write_f32(output_path, SAMPLE_RATE, CHANNELS, audio_data)
   puts "Wrote #{output_path} (#{total_ms} ms, #{SAMPLE_RATE} Hz, stereo)"
 end
 

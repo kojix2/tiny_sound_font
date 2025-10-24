@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.17.1">
+<meta name="crystal_docs.project_version" content="main">
+<meta name="crystal_docs.project_name" content="tiny_sound_font">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="tiny_sound_font">
+  <title>TinySoundFont::Channel - tiny_sound_font main</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          tiny_sound_font
+        </a>
+      </h1>
+
+      <span class="project-version">
+        main
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="tiny_sound_font/TinySoundFont" data-name="tinysoundfont">
+      <a href="../TinySoundFont.html">TinySoundFont</a>
+      
+        <ul>
+  
+  <li class=" current" data-id="tiny_sound_font/TinySoundFont/Channel" data-name="tinysoundfont::channel">
+      <a href="../TinySoundFont/Channel.html">Channel</a>
+      
+    </li>
+  
+  <li class=" " data-id="tiny_sound_font/TinySoundFont/OutputMode" data-name="tinysoundfont::outputmode">
+      <a href="../TinySoundFont/OutputMode.html">OutputMode</a>
+      
+    </li>
+  
+  <li class=" " data-id="tiny_sound_font/TinySoundFont/SoundFont" data-name="tinysoundfont::soundfont">
+      <a href="../TinySoundFont/SoundFont.html">SoundFont</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    class
+  </span> TinySoundFont::<wbr>Channel
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../TinySoundFont/Channel.html">TinySoundFont::Channel</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L4" target="_blank">
+        tiny_sound_font/channel.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28handle%3ALibTSF%3A%3ATSF%2Cindex%3AInt32%29-class-method" class="signature"><strong>.new</strong>(handle : LibTSF::TSF, index : Int32)</a>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#bank%3D%28bank%3AInt32%29-instance-method" class="signature"><strong>#bank=</strong>(bank : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bank_preset%3D%28tuple%3ATuple%28Int32%2CInt32%29%29-instance-method" class="signature"><strong>#bank_preset=</strong>(tuple : Tuple(Int32, Int32))</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#midi_control%28controller%3AInt32%2Cvalue%3AInt32%29-instance-method" class="signature"><strong>#midi_control</strong>(controller : Int32, value : Int32)</a>
+        
+          <div class="summary"><p>MIDI control (CC)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#note_off%28key%3AInt32%29-instance-method" class="signature"><strong>#note_off</strong>(key : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#note_off_all-instance-method" class="signature"><strong>#note_off_all</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#note_on%28key%3AInt32%2Cvelocity%3AFloat32%3D1.0_f32%29-instance-method" class="signature"><strong>#note_on</strong>(key : Int32, velocity : Float32 = <span class="n">1.0_f32</span>)</a>
+        
+          <div class="summary"><p>Notes</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pan%3AFloat32-instance-method" class="signature"><strong>#pan</strong> : Float32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pan%3D%28v%3AFloat32%29-instance-method" class="signature"><strong>#pan=</strong>(v : Float32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pitch_range%3AFloat32-instance-method" class="signature"><strong>#pitch_range</strong> : Float32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pitch_range%3D%28v%3AFloat32%29-instance-method" class="signature"><strong>#pitch_range=</strong>(v : Float32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pitch_wheel%3AInt32-instance-method" class="signature"><strong>#pitch_wheel</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pitch_wheel%3D%28v%3AInt32%29-instance-method" class="signature"><strong>#pitch_wheel=</strong>(v : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#preset_bank%3AInt32-instance-method" class="signature"><strong>#preset_bank</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#preset_index%3AInt32-instance-method" class="signature"><strong>#preset_index</strong> : Int32</a>
+        
+          <div class="summary"><p>Getters</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#preset_index%3D%28idx%3AInt32%29-instance-method" class="signature"><strong>#preset_index=</strong>(idx : Int32)</a>
+        
+          <div class="summary"><p>Setters</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#preset_number%3AInt32-instance-method" class="signature"><strong>#preset_number</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#preset_number%3D%28program%3AInt32%29-instance-method" class="signature"><strong>#preset_number=</strong>(program : Int32)</a>
+        
+          <div class="summary"><p>Setter version (melodic by default)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#set_bank_and_preset%28bank%3AInt32%2Cprogram%3AInt32%29-instance-method" class="signature"><strong>#set_bank_and_preset</strong>(bank : Int32, program : Int32)</a>
+        
+          <div class="summary"><p>Explicit method name variant for readability</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#set_preset_number%28program%3AInt32%2Cdrums%3ABool%3Dfalse%29-instance-method" class="signature"><strong>#set_preset_number</strong>(program : Int32, drums : Bool = <span class="n">false</span>)</a>
+        
+          <div class="summary"><p>Full control with drums flag</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sounds_off_all-instance-method" class="signature"><strong>#sounds_off_all</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sustain%3D%28on%3ABool%29-instance-method" class="signature"><strong>#sustain=</strong>(on : Bool)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tuning%3AFloat32-instance-method" class="signature"><strong>#tuning</strong> : Float32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tuning%3D%28v%3AFloat32%29-instance-method" class="signature"><strong>#tuning=</strong>(v : Float32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#volume%3AFloat32-instance-method" class="signature"><strong>#volume</strong> : Float32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#volume%3D%28v%3AFloat32%29-instance-method" class="signature"><strong>#volume=</strong>(v : Float32)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(handle:LibTSF::TSF,index:Int32)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(handle : LibTSF::TSF, index : Int32)
+
+        <a class="method-permalink" href="#new%28handle%3ALibTSF%3A%3ATSF%2Cindex%3AInt32%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="bank=(bank:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>bank=</strong>(bank : Int32)
+
+        <a class="method-permalink" href="#bank%3D%28bank%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bank_preset=(tuple:Tuple(Int32,Int32))-instance-method">
+      <div class="signature">
+        
+        def <strong>bank_preset=</strong>(tuple : Tuple(Int32, Int32))
+
+        <a class="method-permalink" href="#bank_preset%3D%28tuple%3ATuple%28Int32%2CInt32%29%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L28" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="midi_control(controller:Int32,value:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>midi_control</strong>(controller : Int32, value : Int32)
+
+        <a class="method-permalink" href="#midi_control%28controller%3AInt32%2Cvalue%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>MIDI control (CC)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L80" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="note_off(key:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>note_off</strong>(key : Int32)
+
+        <a class="method-permalink" href="#note_off%28key%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L67" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="note_off_all-instance-method">
+      <div class="signature">
+        
+        def <strong>note_off_all</strong>
+
+        <a class="method-permalink" href="#note_off_all-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L71" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="note_on(key:Int32,velocity:Float32=1.0_f32)-instance-method">
+      <div class="signature">
+        
+        def <strong>note_on</strong>(key : Int32, velocity : Float32 = <span class="n">1.0_f32</span>)
+
+        <a class="method-permalink" href="#note_on%28key%3AInt32%2Cvelocity%3AFloat32%3D1.0_f32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Notes</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L63" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pan:Float32-instance-method">
+      <div class="signature">
+        
+        def <strong>pan</strong> : Float32
+
+        <a class="method-permalink" href="#pan%3AFloat32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L97" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pan=(v:Float32)-instance-method">
+      <div class="signature">
+        
+        def <strong>pan=</strong>(v : Float32)
+
+        <a class="method-permalink" href="#pan%3D%28v%3AFloat32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pitch_range:Float32-instance-method">
+      <div class="signature">
+        
+        def <strong>pitch_range</strong> : Float32
+
+        <a class="method-permalink" href="#pitch_range%3AFloat32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L109" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pitch_range=(v:Float32)-instance-method">
+      <div class="signature">
+        
+        def <strong>pitch_range=</strong>(v : Float32)
+
+        <a class="method-permalink" href="#pitch_range%3D%28v%3AFloat32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L50" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pitch_wheel:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>pitch_wheel</strong> : Int32
+
+        <a class="method-permalink" href="#pitch_wheel%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L105" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pitch_wheel=(v:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>pitch_wheel=</strong>(v : Int32)
+
+        <a class="method-permalink" href="#pitch_wheel%3D%28v%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L46" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="preset_bank:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>preset_bank</strong> : Int32
+
+        <a class="method-permalink" href="#preset_bank%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L89" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="preset_index:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>preset_index</strong> : Int32
+
+        <a class="method-permalink" href="#preset_index%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Getters</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L85" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="preset_index=(idx:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>preset_index=</strong>(idx : Int32)
+
+        <a class="method-permalink" href="#preset_index%3D%28idx%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Setters</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="preset_number:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>preset_number</strong> : Int32
+
+        <a class="method-permalink" href="#preset_number%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="preset_number=(program:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>preset_number=</strong>(program : Int32)
+
+        <a class="method-permalink" href="#preset_number%3D%28program%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Setter version (melodic by default)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="set_bank_and_preset(bank:Int32,program:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>set_bank_and_preset</strong>(bank : Int32, program : Int32)
+
+        <a class="method-permalink" href="#set_bank_and_preset%28bank%3AInt32%2Cprogram%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Explicit method name variant for readability</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="set_preset_number(program:Int32,drums:Bool=false)-instance-method">
+      <div class="signature">
+        
+        def <strong>set_preset_number</strong>(program : Int32, drums : Bool = <span class="n">false</span>)
+
+        <a class="method-permalink" href="#set_preset_number%28program%3AInt32%2Cdrums%3ABool%3Dfalse%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Full control with drums flag</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sounds_off_all-instance-method">
+      <div class="signature">
+        
+        def <strong>sounds_off_all</strong>
+
+        <a class="method-permalink" href="#sounds_off_all-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L75" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sustain=(on:Bool)-instance-method">
+      <div class="signature">
+        
+        def <strong>sustain=</strong>(on : Bool)
+
+        <a class="method-permalink" href="#sustain%3D%28on%3ABool%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L58" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tuning:Float32-instance-method">
+      <div class="signature">
+        
+        def <strong>tuning</strong> : Float32
+
+        <a class="method-permalink" href="#tuning%3AFloat32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L113" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tuning=(v:Float32)-instance-method">
+      <div class="signature">
+        
+        def <strong>tuning=</strong>(v : Float32)
+
+        <a class="method-permalink" href="#tuning%3D%28v%3AFloat32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L54" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="volume:Float32-instance-method">
+      <div class="signature">
+        
+        def <strong>volume</strong> : Float32
+
+        <a class="method-permalink" href="#volume%3AFloat32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L101" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="volume=(v:Float32)-instance-method">
+      <div class="signature">
+        
+        def <strong>volume=</strong>(v : Float32)
+
+        <a class="method-permalink" href="#volume%3D%28v%3AFloat32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/tiny_sound_font/blob/16588bc7a72cc0945a9108c3eb370345571962f7/src/tiny_sound_font/channel.cr#L42" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>

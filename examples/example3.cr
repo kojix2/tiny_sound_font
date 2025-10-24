@@ -1,14 +1,12 @@
 require "../src/tiny_sound_font"
 
-# Example3: Load a MIDI (via TinyMidiLoader), schedule messages while rendering TinySoundFont,
-# write result as WAV offline (no realtime audio backend required).
+# Example3 using high-level API + TinyMidiLoader: offline render MIDI to WAV.
 
-LibTSF = TinySoundFont::LibTSF
 LibTML = TinySoundFont::LibTML
 
 SAMPLE_RATE      =    44_100
 CHANNELS         =         2
-BLOCK            =        64 # TSF_RENDER_EFFECTSAMPLEBLOCK default
+BLOCK            =        64
 GAIN_DB          = -10.0_f32
 BYTES_PER_SAMPLE =         2
 
@@ -24,12 +22,12 @@ def calculate_length(first_msg)
   time_len + 1000_u32 # Add tail for releases
 end
 
-def configure_synth(tsf)
-  LibTSF.channel_set_bank_preset(tsf, 9, 128, 0) # Percussion on channel 9
-  LibTSF.set_output(tsf, TinySoundFont::LibTSF::OutputMode::StereoInterleaved, SAMPLE_RATE, GAIN_DB)
+def configure_synth(sf : TinySoundFont::SoundFont)
+  sf.set_output(TinySoundFont::OutputMode::StereoInterleaved, SAMPLE_RATE, GAIN_DB)
+  sf.channel(9).set_bank_and_preset(128, 0) # Map channel 9 to percussion
 end
 
-def render_midi(tsf, first_msg, total_frames)
+def render_midi(sf : TinySoundFont::SoundFont, first_msg, total_frames)
   out_f32 = Slice(Float32).new(total_frames * CHANNELS)
   write_frames = 0
   msec = 0.0
@@ -42,13 +40,13 @@ def render_midi(tsf, first_msg, total_frames)
     # Dispatch all MIDI messages up to next_msec
     while !current.null? && current.value.time <= next_msec
       break if current.value.time < msec
-      dispatch_message(tsf, current.value)
+      dispatch_message(sf, current.value)
       current = current.value.next
     end
 
     # Render this block
     seg = out_f32[write_frames * CHANNELS, block * CHANNELS]
-    LibTSF.render_float(tsf, seg, block, 0)
+    sf.render_float!(seg, block)
 
     write_frames += block
     msec = next_msec
@@ -57,19 +55,20 @@ def render_midi(tsf, first_msg, total_frames)
   out_f32
 end
 
-def dispatch_message(tsf, msg)
+def dispatch_message(sf : TinySoundFont::SoundFont, msg)
+  ch = sf.channel(msg.channel)
   case TinySoundFont::LibTML::MessageType.new(msg.type)
   when .program_change?
-    LibTSF.channel_set_presetnumber(tsf, msg.channel, param_low(msg), (msg.channel == 9) ? 1 : 0)
+    ch.set_preset_number(param_low(msg).to_i, drums: msg.channel == 9)
   when .note_on?
     velocity = param_high(msg).to_f32 / 127.0_f32
-    LibTSF.channel_note_on(tsf, msg.channel, param_low(msg), velocity)
+    ch.note_on(param_low(msg).to_i, velocity)
   when .note_off?
-    LibTSF.channel_note_off(tsf, msg.channel, param_low(msg))
+    ch.note_off(param_low(msg).to_i)
   when .pitch_bend?
-    LibTSF.channel_set_pitchwheel(tsf, msg.channel, msg.param)
+    ch.pitch_wheel = msg.param
   when .control_change?
-    LibTSF.channel_midi_control(tsf, msg.channel, param_low(msg), param_high(msg))
+    ch.midi_control(param_low(msg).to_i, param_high(msg).to_i)
   end
 end
 
@@ -132,19 +131,11 @@ raise "Failed to load MIDI: #{midi_path}" if first_msg.null?
 total_ms = calculate_length(first_msg)
 total_frames = (total_ms.to_f64 * SAMPLE_RATE / 1000.0).ceil.to_i
 
-tsf = LibTSF.load_filename(sf2_path)
-if tsf.null?
-  LibTML.free(first_msg)
-  raise "Failed to load SoundFont: #{sf2_path}"
-end
-
-begin
-  configure_synth(tsf)
-  audio_data = render_midi(tsf, first_msg, total_frames)
+TinySoundFont::SoundFont.open(sf2_path, SAMPLE_RATE, TinySoundFont::OutputMode::StereoInterleaved, GAIN_DB) do |sf|
+  configure_synth(sf)
+  audio_data = render_midi(sf, first_msg, total_frames)
   write_wav(output_path, audio_data)
   puts "Wrote #{output_path} (#{total_ms} ms, #{SAMPLE_RATE} Hz, stereo)"
-ensure
-  LibTSF.note_off_all(tsf)
-  LibTSF.close(tsf)
-  LibTML.free(first_msg)
 end
+
+LibTML.free(first_msg)

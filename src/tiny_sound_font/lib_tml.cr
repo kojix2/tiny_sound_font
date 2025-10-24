@@ -1,8 +1,10 @@
+require "./lib_tml"
+
 module TinySoundFont
   {% if flag?(:msvc) %}
-    @[Link("tsf", ldflags: "/LIBPATH:#{__DIR__}\\..\\..\\ext")]
+    @[Link("tml", ldflags: "/LIBPATH:#{__DIR__}\\..\\..\\ext")]
   {% else %}
-    @[Link(ldflags: "-L#{__DIR__}/../../ext -ltsf -lm")]
+    @[Link("tml", ldflags: "-L#{__DIR__}/../../ext")]
   {% end %}
   lib LibTML
     enum MessageType : UInt8

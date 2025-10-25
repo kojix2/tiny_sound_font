@@ -14,14 +14,16 @@ IS_MSVC := $(findstring cl,$(CC))
 
 # Output names by toolchain
 ifeq ($(IS_MSVC),cl)
-  OBJEXT := obj
-  LIBEXT := lib
+	OBJEXT := obj
+	LIBEXT := lib
+	# MSVC toolchain expects 'tsf.lib' for @[Link("tsf")]
+	STATIC := tsf.$(LIBEXT)
 else
-  OBJEXT := o
-  LIBEXT := a
+	OBJEXT := o
+	LIBEXT := a
+	# GCC/Clang link name '-ltsf' maps to 'libtsf.a'
+	STATIC := libtsf.$(LIBEXT)
 endif
-
-STATIC := libtsf.$(LIBEXT)
 OBJ := $(SRC:.c=.$(OBJEXT))
 
 # Keep flags simple and cross-env friendly

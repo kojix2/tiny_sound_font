@@ -20,3 +20,5 @@
 *.dylib
 
 *.wav
+*.mid
+*.sf2

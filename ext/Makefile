@@ -30,12 +30,12 @@ CFLAGS   ?=
 
 ifeq ($(IS_MSVC),cl)
 	CPPFLAGS += /I. /D_CRT_SECURE_NO_WARNINGS
-  CFLAGS   += /nologo /O2
-  COMPILE.c = $(CC) $(CPPFLAGS) $(CFLAGS) /c $< /Fo$@
+	CFLAGS   += /nologo /O2
+	COMPILE.c = $(CC) $(CPPFLAGS) $(CFLAGS) /c
 else
 	CPPFLAGS += -I.
-  CFLAGS   += -O2 -fPIC -std=c11
-  COMPILE.c = $(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	CFLAGS   += -O2 -fPIC -std=c11
+	COMPILE.c = $(CC) $(CPPFLAGS) $(CFLAGS) -c
 endif
 
 .PHONY: all clean check-tsf check-assets
@@ -71,8 +71,10 @@ check-assets:
 	fi
 
 # Compile rules
-%.$(OBJEXT): %.c $(TSF_HEADERS)
-	$(COMPILE.c)
+# Use order-only prerequisites for headers so rule selection doesn't fail
+# if headers are not yet present (they are fetched by the 'check-tsf' target).
+%.$(OBJEXT): %.c | $(TSF_HEADERS)
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 # Archive rules
 ifeq ($(IS_MSVC),cl)

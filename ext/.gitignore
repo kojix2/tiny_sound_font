@@ -1,0 +1,6 @@
+# Ignore downloaded TinySoundFont headers and build outputs
+tsf.h
+tml.h
+libtsf.a
+*.o
+*.obj

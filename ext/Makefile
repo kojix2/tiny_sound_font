@@ -1,57 +1,72 @@
 CC ?= gcc
 AR ?= ar
 RANLIB ?= ranlib
-SRC ?= tsf.c tml.c
 
-# Detect MSVC (cl). A simple heuristic: CC contains 'cl' (case-sensitive as typical on Windows).
+# TinySoundFont headers (fetch on demand with curl)
+TSF_REF  ?= master
+TSF_HEADERS := tsf.h tml.h
+
+# Sources implementing TinySoundFont single-header libs
+SRC := tsf.c tml.c
+
+# Detect MSVC by checking 'cl' in CC
 IS_MSVC := $(findstring cl,$(CC))
 
+# Output names by toolchain
 ifeq ($(IS_MSVC),cl)
-# ---- MSVC toolchain settings ----
-OBJEXT := obj
-LIBEXT := lib
-STATIC := libtsf.$(LIBEXT)
-
-# Override flags for MSVC
-override CFLAGS := /nologo /O2 /I. /ITinySoundFont /D_CRT_SECURE_NO_WARNINGS
-
-# Use Microsoft LIB to create the static library
-AR := lib
-RANLIB := echo
-
-# Compile rule for MSVC: /c to compile, /Fo to set output object filename
-COMPILE.c = $(CC) $(CFLAGS) /c $< /Fo$@
-
+  OBJEXT := obj
+  LIBEXT := lib
 else
-# ---- GCC/Clang toolchain settings ----
-OBJEXT := o
-LIBEXT := a
-STATIC := libtsf.$(LIBEXT)
-
-CFLAGS ?= -O3 -std=c11 -fPIC -I. -ITinySoundFont
-
-# Compile rule for GCC/Clang
-COMPILE.c = $(CC) $(CFLAGS) -c $< -o $@
-
+  OBJEXT := o
+  LIBEXT := a
 endif
 
+STATIC := libtsf.$(LIBEXT)
 OBJ := $(SRC:.c=.$(OBJEXT))
 
-.PHONY: all clean
-
-all: $(STATIC)
-
-%.$(OBJEXT): %.c
-	$(COMPILE.c)
+# Keep flags simple and cross-env friendly
+CPPFLAGS ?=
+CFLAGS   ?=
 
 ifeq ($(IS_MSVC),cl)
+	CPPFLAGS += /I. /D_CRT_SECURE_NO_WARNINGS
+  CFLAGS   += /nologo /O2
+  COMPILE.c = $(CC) $(CPPFLAGS) $(CFLAGS) /c $< /Fo$@
+else
+	CPPFLAGS += -I.
+  CFLAGS   += -O2 -fPIC -std=c11
+  COMPILE.c = $(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+endif
+
+.PHONY: all clean check-tsf
+
+# Default target
+all: check-tsf $(STATIC)
+
+# Fetch TinySoundFont headers (curl only; simple and cross-platform)
+check-tsf:
+	@if [ ! -f "tsf.h" ] || [ ! -f "tml.h" ]; then \
+		echo "Downloading TinySoundFont headers ($(TSF_REF)) via curl..."; \
+		if ! command -v curl >/dev/null 2>&1; then \
+			echo "Error: curl is required to fetch TinySoundFont headers."; \
+			exit 1; \
+		fi; \
+		curl -fsSL -o tsf.h "https://raw.githubusercontent.com/schellingb/TinySoundFont/$(TSF_REF)/tsf.h"; \
+		curl -fsSL -o tml.h "https://raw.githubusercontent.com/schellingb/TinySoundFont/$(TSF_REF)/tml.h"; \
+	fi
+
+# Compile rules
+%.$(OBJEXT): %.c $(TSF_HEADERS)
+	$(COMPILE.c)
+
+# Archive rules
+ifeq ($(IS_MSVC),cl)
 $(STATIC): $(OBJ)
-	$(AR) /nologo /out:$@ $^
-	$(AR) /nologo /out:tsf.lib $^
+	lib /nologo /OUT:$@ $(OBJ)
 else
 $(STATIC): $(OBJ)
 	$(AR) rcs $@ $^
-	$(RANLIB) $@ || true
+	-@$(RANLIB) $@ >/dev/null 2>&1 || true
 endif
 
 clean:

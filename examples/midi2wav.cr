@@ -11,7 +11,7 @@ DEFAULT_SAMPLE_RATE  = 44_100
 DEFAULT_GAIN_DB      = -10.0_f32
 DEFAULT_OUTPUT_MODE  = TinySoundFont::OutputMode::StereoInterleaved
 DEFAULT_BLOCK_SIZE   = 64
-DEFAULT_SOUNDFONT_SF2 = {{ read_file("#{__DIR__}/../ext/TinySoundFont/examples/florestan-subset.sf2") }}
+DEFAULT_SOUNDFONT_SF2 = {{ read_file("#{__DIR__}/../ext/florestan-subset.sf2") }}
 
 struct CliOptions
   property midi_path : String?

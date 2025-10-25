@@ -7,7 +7,7 @@ SECONDS     =      3
 FRAMES      = SAMPLE_RATE * SECONDS
 
 # Use the sample SF2 in the repository
-sf2_path = File.expand_path("../ext/TinySoundFont/examples/florestan-subset.sf2", __DIR__)
+sf2_path = File.expand_path("../ext/florestan-subset.sf2", __DIR__)
 raise "SF2 not found: #{sf2_path}" unless File.exists?(sf2_path)
 
 TinySoundFont::SoundFont.open(sf2_path, SAMPLE_RATE, TinySoundFont::OutputMode::StereoInterleaved, -10.0_f32) do |sf|

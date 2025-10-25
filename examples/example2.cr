@@ -18,7 +18,7 @@ def float_to_int16!(buf_f32 : Slice(Float32), out_i16 : Slice(Int16))
   end
 end
 
-sf2_path = File.expand_path("../ext/TinySoundFont/examples/florestan-subset.sf2", __DIR__)
+sf2_path = File.expand_path("../ext/florestan-subset.sf2", __DIR__)
 raise "SF2 not found: #{sf2_path}" unless File.exists?(sf2_path)
 
 TinySoundFont::SoundFont.open(sf2_path, SAMPLE_RATE, TinySoundFont::OutputMode::StereoInterleaved, 0.0_f32) do |sf|

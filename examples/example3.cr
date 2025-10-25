@@ -82,8 +82,8 @@ def param_high(msg) : UInt8
 end
 
 # Main execution
-midi_path = ARGV[0]? || File.expand_path("../ext/TinySoundFont/examples/venture.mid", __DIR__)
-sf2_path = ARGV[1]? || File.expand_path("../ext/TinySoundFont/examples/florestan-subset.sf2", __DIR__)
+midi_path = ARGV[0]? || File.expand_path("../ext/venture.mid", __DIR__)
+sf2_path = ARGV[1]? || File.expand_path("../ext/florestan-subset.sf2", __DIR__)
 output_path = File.expand_path("example3.wav", __DIR__)
 
 raise "MIDI not found: #{midi_path}" unless File.exists?(midi_path)

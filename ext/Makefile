@@ -38,10 +38,10 @@ else
   COMPILE.c = $(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 endif
 
-.PHONY: all clean check-tsf
+.PHONY: all clean check-tsf check-assets
 
 # Default target
-all: check-tsf $(STATIC)
+all: check-tsf check-assets $(STATIC)
 
 # Fetch TinySoundFont headers (curl only; simple and cross-platform)
 check-tsf:
@@ -53,6 +53,21 @@ check-tsf:
 		fi; \
 		curl -fsSL -o tsf.h "https://raw.githubusercontent.com/schellingb/TinySoundFont/$(TSF_REF)/tsf.h"; \
 		curl -fsSL -o tml.h "https://raw.githubusercontent.com/schellingb/TinySoundFont/$(TSF_REF)/tml.h"; \
+	fi
+
+# Fetch example assets used by Crystal examples (minimal)
+check-assets:
+	@if ! command -v curl >/dev/null 2>&1; then \
+		echo "Error: curl is required to fetch TinySoundFont example assets."; \
+		exit 1; \
+	fi
+	@if [ ! -f "florestan-subset.sf2" ]; then \
+		echo "Downloading florestan-subset.sf2 ($(TSF_REF)) to ext/..."; \
+		curl -fsSL -o florestan-subset.sf2 "https://raw.githubusercontent.com/schellingb/TinySoundFont/$(TSF_REF)/examples/florestan-subset.sf2"; \
+	fi
+	@if [ ! -f "venture.mid" ]; then \
+		echo "Downloading venture.mid ($(TSF_REF)) to ext/..."; \
+		curl -fsSL -o venture.mid "https://raw.githubusercontent.com/schellingb/TinySoundFont/$(TSF_REF)/examples/venture.mid"; \
 	fi
 
 # Compile rules

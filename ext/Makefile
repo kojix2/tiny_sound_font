@@ -1,4 +1,8 @@
 CC ?= gcc
+# Prefer MSVC toolchain automatically if available on PATH (for Crystal on Windows)
+ifneq ($(shell command -v cl >/dev/null 2>&1 && echo found),)
+	CC := cl
+endif
 AR ?= ar
 RANLIB ?= ranlib
 
